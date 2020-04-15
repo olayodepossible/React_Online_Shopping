@@ -1,10 +1,12 @@
 package com.possible.onlinestore.models;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -20,9 +22,10 @@ public class Product {
     @NotBlank(message = "Product name cannot be blank")
     private String name;
     @NotBlank(message = "Product brand cannot be blank")
+    @Size(min = 4, max = 6, message = "Please use 4 to 6 characters")
     private String brand;
 
-/*    @NotBlank(message = "Tell us something about the product")*/
+    @NotBlank(message = "Product description is Required")
     @JsonIgnore
     private String description;
 
@@ -42,7 +45,10 @@ public class Product {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")
     private List<Category> categories;
 
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date created_At;
+
+    @JsonFormat(pattern = "dd-mm-yyyy")
     private Date updated_At;
 
     @PrePersist void onCreate(){

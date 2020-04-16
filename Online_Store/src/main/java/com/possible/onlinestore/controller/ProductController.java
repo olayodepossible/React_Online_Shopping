@@ -26,18 +26,18 @@ public class ProductController {
     @Autowired
     private MapValidationErrorService mapValidationErrorService;
 
-    @GetMapping("/")
-    public ResponseEntity<?> getProduct(){
+    @GetMapping("/{productCode}")
+    public ResponseEntity<?> getProduct(@PathVariable String productCode){
+        Product product = productService.findProductByProductCode(productCode);
 
-
-        return null;
+        return new ResponseEntity<Product>(product, HttpStatus.OK);
     }
 
-    @GetMapping("/products")
-    public ResponseEntity<?> getProducts(){
+    @GetMapping("/all")
+    public Iterable<Product> getAllProducts(){
 
 
-        return null;
+        return productService.findAllProduct();
     }
 
     @PostMapping("")
@@ -47,6 +47,15 @@ public class ProductController {
         Product product1 = productService.saveOrUpdateProduct(product);
 
         return new ResponseEntity<Product>(product1, HttpStatus.CREATED);
+    }
+
+
+    @DeleteMapping("/{productCode}")
+    public ResponseEntity<?> deleteProduct(@PathVariable String productCode){
+        productService.deleteProductById(productCode);
+
+        return new ResponseEntity<String>("Project '"+productCode+"' was successfully deleted", HttpStatus.OK);
+
     }
 }
 

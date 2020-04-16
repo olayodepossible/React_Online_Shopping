@@ -12,9 +12,20 @@ public class ProductService {
     private ProductRepository productRepository;
 
     public Product saveOrUpdateProduct(Product product){
-
-
-
         return productRepository.save(product);
+    }
+
+    public Product findProductByProductCode(String productCode){
+        return productRepository.findByProductCode(productCode);
+    }
+
+    public Iterable<Product> findAllProduct(){
+        return productRepository.findAll();
+    }
+
+    public void deleteProductById(String productCode){
+        Product product = productRepository.findByProductCode(productCode);
+
+        productRepository.delete(product);
     }
 }

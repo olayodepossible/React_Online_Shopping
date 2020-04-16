@@ -18,9 +18,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String code;
+    @Column(updatable = false)
+    private String productCode;
+
     @NotBlank(message = "Product name cannot be blank")
     private String name;
+
     @NotBlank(message = "Product brand cannot be blank")
     @Size(min = 4, max = 6, message = "Please use 4 to 6 characters")
     private String brand;
@@ -60,7 +63,7 @@ public class Product {
     }
 
     public Product() {
-        this.code = "PRD-"+ UUID.randomUUID().toString().substring(26).toUpperCase();
+        this.productCode = "PRD-"+ UUID.randomUUID().toString().substring(26).toUpperCase();
     }
 
     public Long getId() {
@@ -71,12 +74,12 @@ public class Product {
         this.id = id;
     }
 
-    public String getCode() {
-        return code;
+    public String getProductCode() {
+        return productCode;
     }
 
-    public void setCode(String code) {
-        this.code = code;
+    public void setProductCode(String code) {
+        this.productCode = code;
     }
 
     public String getName() {
